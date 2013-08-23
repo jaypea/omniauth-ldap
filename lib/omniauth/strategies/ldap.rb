@@ -6,8 +6,7 @@ module OmniAuth
       class MissingCredentialsError < StandardError; end
       include OmniAuth::Strategy
       @@config = {
-        #'name' => 'cn',
-        'name' => {"%0 %1" => [['first_name', 'last_name'], ['givenName', 'sn']]},
+        'name' => 'cn',
         'first_name' => 'givenName',
         'last_name' => 'sn',
         'email' => ['mail', "email", 'userPrincipalName'],
@@ -60,6 +59,7 @@ module OmniAuth
         @user_info["uid"]
       }
       info {
+        @user_info['name'] = [@user_info['first_name'], @user_info['last_name']].join(' ')
         @user_info
       }
       extra {
